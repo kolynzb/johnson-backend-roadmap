@@ -1,13 +1,13 @@
 const express = require("express");
-const productsRoute = require("./routes/productsRoute");
+const connectDB = require("./config/connectDB");
+const port = process.env.PORT || 5000;
+require("dotenv/config");
 
-//initialing an express app
 const app = express();
 
-app.use("/products", productsRoute);
+const startServer = () => {
+  connectDB();
+  app.listen(port, () => console.log(`listening on ${port}`));
+};
 
-app.get("/", (req, res) => {
-  res.status(200).send("welcome to ur api");
-});
-
-app.listen(8000, () => console.log("listenng on port 8000"));
+startServer();
