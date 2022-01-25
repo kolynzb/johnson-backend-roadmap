@@ -1,45 +1,19 @@
-const div = document.querySelector(".root");
-const form = document.querySelector(".search-input");
-var movies = [];
+const http = require("http");
+const fs = require("fs");
 
-async function fecthData(title) {
-  const data = await fetch(
-    `https://yts.mx/api/v2/list_movies.json?query_term=${title}`
-  )
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (info) {
-      movies = info.data.movies;
-      console.log(movies);
+const data = fs.readFileSync(`${__dirname}/model.json`, "utf-8");
 
-      movies.map(function (movie) {
-        const html = `
-        <div class="div">
-        <img src=${movie.large_cover_image} alt="" />
-        <h1>${movie.title}</h1>
-        <iframe
-          width="560"
-          height="315"
-          src="https://www.youtube.com/embed/${movie.yt_trailer_code}"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-        ></iframe>
-        <p>
-            ${movie.description_full}
-        </p>
-      </div>
-        `;
-        div.innerHTML += html;
-      });
-    });
-}
+const server = http.createServer((req, res) => {
+  const pathName = req.url;
 
-function submitMovie(e) {
-  e.preventDefault();
-  fecthData(form.search.value);
-}
+  switch (pathName) {
+    case "/":
+      res.end("welcome to ur api");
+    case "/products":
+      res.end(data);
+    default:
+      res.end("this page doesnt exist");
+  }
+});
 
-form.addEventListener("submit", submitMovie);
+server.listen(8000, "127.0.0.1", () => console.log("listening on port 8000"));
