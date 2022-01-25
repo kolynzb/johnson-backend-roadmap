@@ -32,7 +32,7 @@ async function fecthData(title) {
         </p>
       </div>
         `;
-        div.innerHTML = html;
+        div.innerHTML += html;
       });
     });
 }
