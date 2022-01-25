@@ -1,19 +1,13 @@
-const http = require("http");
-const fs = require("fs");
+const express = require("express");
+const productsRoute = require("./routes/productsRoute");
 
-const data = fs.readFileSync(`${__dirname}/model.json`, "utf-8");
+//initialing an express app
+const app = express();
 
-const server = http.createServer((req, res) => {
-  const pathName = req.url;
+app.use("/products", productsRoute);
 
-  switch (pathName) {
-    case "/":
-      res.end("welcome to ur api");
-    case "/products":
-      res.end(data);
-    default:
-      res.end("this page doesnt exist");
-  }
+app.get("/", (req, res) => {
+  res.status(200).send("welcome to ur api");
 });
 
-server.listen(8000, "127.0.0.1", () => console.log("listening on port 8000"));
+app.listen(8000, () => console.log("listenng on port 8000"));

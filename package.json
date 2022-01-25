@@ -1,0 +1,11 @@
+{
+  "name": "johnson",
+  "version": "1.0.0",
+  "main": "server.js",
+  "repository": "https://github.com/kolynzb/johnson-backend-roadmap.git",
+  "author": "kolynzb <collinsbenda360@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.2"
+  }
+}
